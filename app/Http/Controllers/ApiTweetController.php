@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ApiTweetController extends Controller
 {
+    // public function __construct()
+    // {
+    //     dd('sasd');
+    // }
     public function addTweet(StoreTweetRequest $request)
     {
 
@@ -28,9 +32,20 @@ class ApiTweetController extends Controller
         ],201);
     }
 
-    public function showAllTweets(Request $request)
-    {        
-        return Tweet::paginate(2);
+    public function showAllFollowingsTweets(Request $request)
+    {  
+        $followings = Auth::user()->followings()->with('tweets')->paginate(1);
+        return response()->json([$followings]);
+    }
+
+
+    public function destroy($id)
+    {
+        $tweet = Tweet::find($id);
+        $tweet->delete();
+        return response()->json([
+            'message' => 'record deleted successfully'
+        ]);
     }
 
 

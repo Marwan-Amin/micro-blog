@@ -19,8 +19,6 @@ class UserController extends Controller
     public function followUser(int $id)
     {
     $user = User::find($id);
-    // dd($user->id);
-
     Follower::create([
         'user_id' => Auth::user()->id,
         'following_id' => $user->id

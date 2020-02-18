@@ -17,13 +17,19 @@ Route::middleware('auth:api')->group(function () {
     
 Route::post('/tweet/create','ApiTweetController@addTweet');
 
-Route::get('/tweets','ApiTweetController@showAllTweets');
+Route::get('/tweets','ApiTweetController@showAllFollowingsTweets');
+
+Route::delete('/tweet/{id}','ApiTweetController@destroy');
+
+Route::post('/user/follow/{id}','AuthController@follow');
+
+Route::post('/user/unfollow/{id}','AuthController@unFollow');
+
 
 
 
 });
 
 Route::post('/user/register','AuthController@register');
+
 Route::post('/user/login','AuthController@login');
-
-

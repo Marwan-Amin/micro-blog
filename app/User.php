@@ -33,12 +33,17 @@ class User extends Authenticatable implements JWTSubject
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'followers','following_id','user_id')->withPivot('user_id', 'following_id');
+        return $this->belongsToMany(User::class, 'followers','following_id','user_id');
     }
 
     public function followings()
     {
-        return $this->belongsToMany(User::class, 'followers', 'user_id', 'following_id')->withPivot('user_id', 'following_id');
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'following_id');
+    }
+
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class,'user_id');
     }
 
     public function getJWTIdentifier()
