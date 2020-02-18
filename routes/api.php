@@ -12,24 +12,18 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/user/register','AuthController@register');
+Route::post('/user/login','AuthController@login');
 
 Route::middleware('auth:api')->group(function () { 
-    
-Route::post('/tweet/create','ApiTweetController@addTweet');
+    // Tweets routes
+    Route::get('/tweets/timeline','TweetController@index');
+    Route::get('/tweets/user','TweetController@userTweets');
+    Route::post('/tweets','TweetController@store');
+    Route::delete('/tweets/{tweet}','TweetController@destroy');
 
-Route::get('/tweets','ApiTweetController@showAllFollowingsTweets');
-
-Route::delete('/tweet/{id}','ApiTweetController@destroy');
-
-Route::post('/user/follow/{id}','AuthController@follow');
-
-Route::post('/user/unfollow/{id}','AuthController@unFollow');
-
-
-
-
+    //Follow and Unfollow routes
+    Route::post('/user/follow/{id}','FollowerController@follow');
+    Route::post('/user/unfollow/{id}','FollowerController@unFollow');
 });
 
-Route::post('/user/register','AuthController@register');
-
-Route::post('/user/login','AuthController@login');
