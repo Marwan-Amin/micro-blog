@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::middleware('auth:api')->group(function () { 
+    
+Route::post('/tweet/create','ApiTweetController@addTweet');
+
+Route::get('/tweets','ApiTweetController@showAllTweets');
+
+
+
+});
+
 Route::post('/user/register','AuthController@register');
 Route::post('/user/login','AuthController@login');
 

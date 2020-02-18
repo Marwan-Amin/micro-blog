@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -38,15 +40,13 @@ class AuthController extends Controller
         $credentials= $request->only(['email','password']);
         $token = auth()->attempt($credentials);    
 
-        if(!$token){
+        if ($token) {
             return response()->json([
-                'message' =>'Invalid entry data'
-            ]);
+                'message' => 'logged in',
+                'Token' => $token
+            ], 401); 
         }
-        
-        return response()->json([
-            'message' =>'Logged in successfully',
-            'token' =>  $token
-        ]);
+
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 }
