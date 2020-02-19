@@ -29,17 +29,19 @@ class TweetRepository implements TweetRepositoryInterface
     public function showUserTweets()
     {
         $tweets = Tweet::where('user_id',Auth::user()->id)->get();
-        $formatTweets =  $tweets->map(function($tweet){
-            return response()->json([
-                'tweet' => $tweet->tweet,
-                'posted' => $tweet->updated_at->diffForHumans(),
-            ]);
-        });        
+        
+        return $tweets;
     }
 
     public function delete(int $id)
     {
         Tweet::find($id)->delete();
+    }
+
+    public function followingsTweet()
+    {
+        $followings = Auth::user()->followings()->with('tweets')->paginate(2);
+        return $followings;
     }
 
     public function MessageFromCreate($request)

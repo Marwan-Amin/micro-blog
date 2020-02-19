@@ -20,7 +20,7 @@ class TweetController extends Controller
 
     public function userTweets()
     {
-        $this->tweet->showUserTweets();
+        return response()->json($this->tweet->showUserTweets());
     }
 
     public function store(StoreTweetRequest $request)
@@ -32,10 +32,8 @@ class TweetController extends Controller
 
     public function index()
     {  
-        $followings = Auth::user()->followings()->with('tweets')->paginate(2);
-        return response()->json([$followings]);
+        return response()->json([$this->tweet->followingsTweet()]);
     }
-
 
     public function destroy($id)
     {

@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 Route::post('/user/register','AuthController@register');
 Route::post('/user/login','AuthController@login');
 
+
+Route::get('greeting', 'MessageController@index')
+      ->middleware('localization');
+
 Route::middleware('auth:api')->group(function () { 
     // Tweets routes
     Route::get('/tweets/timeline','TweetController@index');
