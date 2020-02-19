@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\StoreTweetRequest;
 use App\Tweet;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\TweetRepositoryInterface;
@@ -18,7 +19,7 @@ class TweetRepository implements TweetRepositoryInterface
         $this->model = $model;
     }
 
-    public function create(Request $request)
+    public function create(StoreTweetRequest $request)
     {
         Tweet::create([
             'tweet' => $request->tweet,
