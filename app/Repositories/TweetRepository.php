@@ -23,7 +23,7 @@ class TweetRepository implements TweetRepositoryInterface
         Tweet::create([
             'tweet' => $request->tweet,
             'user_id' => Auth::user()->id
-        ]);   
+        ]);
     }
 
     public function showUserTweets()

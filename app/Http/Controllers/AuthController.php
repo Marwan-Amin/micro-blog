@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Dotenv\Validator;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
@@ -41,18 +42,16 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
+    {   
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
-
-
+        
+        
         
         $credentials= $request->only(['email','password']);
         $token = auth()->attempt($credentials);    
-
-        
 
         //Login throttle 
 
@@ -81,37 +80,4 @@ class AuthController extends Controller
             'Attempts left' =>  'you have Entered '.$this->limiter()->attempts($this->throttleKey($request)). ' of 5 Login attempts wrong'          
         ]);
     }
-
-    public function follow($id)
-    {
-        $user = User::find($id);
-        
-        Follower::create([
-            'user_id' => Auth::user()->id,
-            'following_id' => $user->id
-        ]);
-
-    
-        return response()->json([
-                'message' => 'Successfully followed the user.',
-            ]); 
-    
-    }
-
-    public function unFollow($id)
-    {
-        $user = User::find($id);
-        
-        Follower::where([
-            'user_id' => Auth::user()->id,
-            'following_id' => $user->id
-        ])->delete();
-
-    
-        return response()->json([
-                'message' => ' unfollowed the user.',
-            ]); 
-    
-    }
-
 }
